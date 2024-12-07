@@ -36,7 +36,7 @@ func LoadConfig() (*Config, error) {
 		return nil, fmt.Errorf("error loading .env file: %v", err)
 	}
 
-	tokenExpireStr  := os.Getenv("TOKEN_EXPIRE")
+	tokenExpireStr := os.Getenv("TOKEN_EXPIRE")
 	tokenExpire := 3600
 	if tokenExpireStr != "" {
 		parsed, err := strconv.Atoi(tokenExpireStr)

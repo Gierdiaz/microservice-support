@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 
 	"os"
 
 	"github.com/Gierdiaz/config"
+	"github.com/Gierdiaz/internal/endpoints"
 	"github.com/Gierdiaz/pkg/logger"
-	"github.com/gin-gonic/gin"
+
 	"go.uber.org/zap"
 )
 
@@ -31,17 +31,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	r := gin.Default()
-
-	r.GET("/support", handleTest)
-
+	r := endpoints.SetupRouter(config)
 	logger.Logger.Info("Servidor iniciado na porta", zap.String("port", config.Server.APP_PORT))
-	r.Run(":" + config.Server.APP_PORT)
-}
-
-func handleTest(c *gin.Context) {
-	c.JSON(http.StatusOK, Response{
-		Message: "microservice support",
-		Status:  "success",
-	})
+	if err := r.Run(":" + config.Server.APP_PORT); err != nil {
+		logger.Logger.Fatal("Erro ao iniciar o servidor", zap.Error(err))
+	}
 }
