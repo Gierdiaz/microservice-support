@@ -12,11 +12,6 @@ import (
 	"go.uber.org/zap"
 )
 
-type Response struct {
-	Message string `json:"message"`
-	Status  string `json:"status"`
-}
-
 func main() {
 	err := logger.InitLogger()
 	if err != nil {
